@@ -10,6 +10,7 @@ function joueur($joueur, $equipe) {
     $joueur->systemMana(-10);
     $joueur->systemPO(10);
     $joueur->systemPV(0);
+    $joueur->systemMana(0);
     $joueur->itemsShop(2);
     $joueur->systemLV(200);
 

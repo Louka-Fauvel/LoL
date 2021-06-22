@@ -99,12 +99,16 @@ class Hero {
       $this->lv = $this->lv + 1;
       $this->pvMax = $this->pvMax + 10;
       $this->manaMax = $this->manaMax + 5;
+      $this->pv = $this->pv + 10;
+      $this->mana = $this->mana + 5;
 
       if ($this->lv > 18) {
         $this->lv = 18;
         $this->exp = "max";
         $this->pvMax = $this->pvMax - 10;
         $this->manaMax = $this->manaMax - 5;
+        $this->pv = $this->pv - 10;
+        $this->mana = $this->mana - 5;
         break;
       }
     }
