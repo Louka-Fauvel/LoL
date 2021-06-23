@@ -1,58 +1,69 @@
 <?php
+include 'Item.php';
 include 'Hero.php';
 
 
-function joueur($joueur, $equipe) {
+function player($player, $team) {
+  $flameNecklace = new Item('Flame Necklace', 5);
+  $shield = new Item('Shield', 5);
+  $axOfDarkness = new Item('Ax of Darkness', 8);
 
-  if ($equipe == "votreJoueur") {
-    $joueur->systemLV(20);
-    $joueur->systemPV(-150);
-    $joueur->systemMana(-10);
-    $joueur->systemPO(10);
-    $joueur->systemPV(0);
-    $joueur->systemMana(0);
-    $joueur->itemsShop(2);
-    $joueur->systemLV(200);
+  if ($team == "yourPlayer") {
+    $player->setLevel(20);
+    $player->setHealth(-150);
+    $player->setMana(-10);
+    $player->setGold(10);
 
-    $heroDie = $joueur->heroDie();
-    echo "      <h3 class='equipe_vert'>Vous <span class='dead'>$heroDie</span></h3>";
-    echo "      <p>Votre Héros se nomme <b>".$joueur->getName()."</b></p>";
+    $heroDie = $player->heroDie();
+    $player->setStatus($heroDie);
+    $player->timerResurrection();
+
+    $player->itemsShop($axOfDarkness);
+    $player->itemsShop($flameNecklace);
+    $player->setLevel(200);
+
+    $heroDie = $player->heroDie();
+    $player->setStatus($heroDie);
+    echo "      <h3 class='team_green'>You <span class='dead'>".$player->getStatus()."</span></h3>";
+    echo "      <p>Your Hero is called <b>".$player->getName()."</b></p>";
   }
 
-  if ($equipe == "equipeAllie") {
-    $joueur->systemLV(20);
-    $joueur->systemPV(-15);
-    $joueur->systemMana(-50);
-    $joueur->systemPO(5);
-    $joueur->itemsShop(1);
+  if ($team == "teamAlly") {
+    $player->setLevel(20);
+    $player->setHealth(-15);
+    $player->setMana(-50);
+    $player->setGold(5);
+    $player->itemsShop($shield);
 
-    $heroDie = $joueur->heroDie();
-    echo "      <h3 class='equipe_bleu'>Allié <span class='dead'>$heroDie</span></h3>";
-    echo "      <p>Son Héros se nomme ".$joueur->getName()."</p>";
+    $heroDie = $player->heroDie();
+    $player->setStatus($heroDie);
+    echo "      <h3 class='team_blue'>Ally <span class='dead'>".$player->getStatus()."</span></h3>";
+    echo "      <p>His Hero is called <b>".$player->getName()."</b></p>";
   }
 
-  if ($equipe == "equipeEnnemi") {
-    $joueur->systemLV(20);
-    $joueur->systemPV(-15);
-    $joueur->systemMana(-50);
-    $joueur->systemPO(5);
-    $joueur->itemsShop(1);
+  if ($team == "teamEnnemy") {
+    $player->setLevel(20);
+    $player->setHealth(-15);
+    $player->setMana(-50);
+    $player->setGold(5);
+    $player->itemsShop($shield);
 
-    $heroDie = $joueur->heroDie();
-    echo "       <h3 class='equipe_rouge'>Ennemi <span class='dead'>$heroDie</span></h3>";
-    echo "       <p>Son Héros se nomme <b>".$joueur->getName()."</b></p>";
+    $heroDie = $player->heroDie();
+    $player->setStatus($heroDie);
+    echo "       <h3 class='team_red'>Ennemy <span class='dead'>".$player->getStatus()."</span></h3>";
+    echo "       <p>His Hero is called <b>".$player->getName()."</b></p>";
   }
 
-  echo "      <p><a class='pv'>".$joueur->getPV()."/".$joueur->getPVMax()."</a> PV</p>";
-  echo "      <p><a class='mana'>".$joueur->getMana()."/".$joueur->getManaMax()."</a> de mana</p>";
-  echo "      <p>".join(", ", $joueur->getItems())."&nbsp;</p>";
-  echo "      <p>Classe : ".$joueur->getClass()."</p>";
-  echo "      <p>".$joueur->getPO()." PO</p>";
-  echo "      <p>Niveau ".$joueur->getLV()." et ".$joueur->getExp()." exp</p>";
+  echo "      <p><a class='health'>".$player->getHealth()."/".$player->getHealthMax()."</a> HP</p>";
+  echo "      <p><a class='mana'>".$player->getMana()."/".$player->getManaMax()."</a> mana</p>";
+  echo "      <p>&nbsp;".join(", ", $player->getItems())."&nbsp;</p>";
+  echo "      <p>Class : ".$player->getClass()."</p>";
+  echo "      <p>".$player->getGold()." Gold</p>";
+  echo "      <p>Level ".$player->getLevel()." and ".$player->getExperience()." XP</p>";
 }
 
-$joueurPrincipal = new Hero("Akou", 100, 20, "Mage"); // Collier de flamme
-$joueurEnnemi = new Hero("Léonidas", 100, 20); // Bouclier
+$playerMain = new Hero("Akou", 100, 20, "Mage"); // Flame necklace
+$playerEnnemy = new Hero("Léonidas", 100, 20);
 ?>
 <!DOCTYPE html>
 <html>
@@ -65,11 +76,11 @@ $joueurEnnemi = new Hero("Léonidas", 100, 20); // Bouclier
     <table>
       <tr>
         <td>
-          <?php joueur($joueurPrincipal, "votreJoueur"); ?>
+          <?php player($playerMain, "yourPlayer"); ?>
         </td>
         <td>
-          <div class='position_inverse'>
-            <?php joueur($joueurEnnemi, "equipeEnnemi"); ?>
+          <div class='position_reverse'>
+            <?php player($playerEnnemy, "teamEnnemy"); ?>
           </div>
         </td>
       </tr>
