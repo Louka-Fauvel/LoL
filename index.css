@@ -1,0 +1,15 @@
+* {font-family:Arial;}
+
+td {padding: 10px 50px}
+
+table {margin: auto;}
+
+.team_red {color: #ff0000;}
+.team_blue {color: #0000ff;}
+.team_green {color: #009900;}
+
+.health {color: #00ff00;}
+.mana {color: #0000ff;}
+.dead {color: #aa0000;}
+
+.position_reverse {text-align: right;}
