@@ -10,59 +10,55 @@ function player($player, $team) {
 
   if ($team == "yourPlayer") {
     $player->setLevel(20);
-    $player->setHealth(-150);
-    $player->setMana(-10);
-    $player->setGold(10);
+    $player->valueHealth(-150);
+    $player->valueMana(-10);
+    $player->valueGold(10);
 
-    $heroDie = $player->heroDie();
-    $player->setStatus($heroDie);
+    $player->setStatus();
     $player->timerResurrection();
 
     $player->itemsShop($axOfDarkness);
     $player->itemsShop($flameNecklace);
     $player->setLevel(200);
 
-    $heroDie = $player->heroDie();
-    $player->setStatus($heroDie);
+    $player->setStatus();
     echo "      <h3 class='team_green'>You <span class='dead'>".$player->getStatus()."</span></h3>";
     echo "      <p>Your Hero is called <b>".$player->getName()."</b></p>";
   }
 
   if ($team == "teamAlly") {
     $player->setLevel(20);
-    $player->setHealth(-15);
-    $player->setMana(-50);
-    $player->setGold(5);
+    $player->valueHealth(-15);
+    $player->valueMana(-50);
+    $player->valueGold(5);
     $player->itemsShop($shield);
 
-    $heroDie = $player->heroDie();
-    $player->setStatus($heroDie);
+    $player->setStatus();
     echo "      <h3 class='team_blue'>Ally <span class='dead'>".$player->getStatus()."</span></h3>";
     echo "      <p>His Hero is called <b>".$player->getName()."</b></p>";
   }
 
   if ($team == "teamEnnemy") {
     $player->setLevel(20);
-    $player->setHealth(-15);
-    $player->setMana(-50);
-    $player->setGold(5);
+    $player->valueHealth(-15);
+    $player->valueMana(-50);
+    $player->valueGold(5);
     $player->itemsShop($shield);
 
-    $heroDie = $player->heroDie();
-    $player->setStatus($heroDie);
+    $player->setStatus();
     echo "       <h3 class='team_red'>Ennemy <span class='dead'>".$player->getStatus()."</span></h3>";
     echo "       <p>His Hero is called <b>".$player->getName()."</b></p>";
   }
 
   echo "      <p><a class='health'>".$player->getHealth()."/".$player->getHealthMax()."</a> HP</p>";
   echo "      <p><a class='mana'>".$player->getMana()."/".$player->getManaMax()."</a> mana</p>";
-  echo "      <p>&nbsp;".join(", ", $player->getItems())."&nbsp;</p>";
+  echo "      <p>&nbsp;".join(", ", $player->backpackItems())."&nbsp;</p>";
   echo "      <p>Class : ".$player->getClass()."</p>";
   echo "      <p>".$player->getGold()." Gold</p>";
   echo "      <p>Level ".$player->getLevel()." and ".$player->getExperience()." XP</p>";
 }
 
-$playerMain = new Hero("Akou", 100, 20, "Mage"); // Flame necklace
+$playerMain = new Hero("Akou", 100, 20, "Mage");
 $playerEnnemy = new Hero("Léonidas", 100, 20);
 ?>
 <!DOCTYPE html>

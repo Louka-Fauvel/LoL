@@ -13,7 +13,7 @@ class Hero {
   private $experience;
   private $status;
 
-  public function __construct(string $name, int $healthMax, int $manaMax, string $class = 'Warrior'){
+  public function __construct(string $name, int $healthMax, int $manaMax, string $class = 'Warrior', $status = ''){
     $this->name = $name;
     $this->healthMax = $healthMax;
     $this->health = $healthMax;
@@ -24,6 +24,7 @@ class Hero {
     $this->gold = 0;
     $this->level = 1;
     $this->experience = 0;
+    $this->status = $status;
   }
 
   public function getName() {
@@ -71,7 +72,7 @@ class Hero {
   }
 
 
-  public function setHealth($n) {
+  public function valueHealth($n) {
     $this->health = $this->health + $n;
 
     if ($this->health <= 0) {
@@ -79,7 +80,7 @@ class Hero {
     }
   }
 
-  public function setMana($n) {
+  public function valueMana($n) {
     $this->mana = $this->mana + $n;
 
     if ($this->mana <= 0) {
@@ -87,7 +88,7 @@ class Hero {
     }
   }
 
-  public function setGold($n) {
+  public function valueGold($n) {
     $this->gold = $this->gold + $n;
 
     if ($this->gold <= 0) {
@@ -96,7 +97,7 @@ class Hero {
   }
 
   public function setLevel($n) {
-    //$this->level = floor($n / 10) + 1;
+
     $this->experience = $this->experience + $n;
     while ($n > pow(2, $this->level)) {
       $this->level = $this->level + 1;
@@ -117,42 +118,49 @@ class Hero {
     }
   }
 
-  public function setStatus($statusHero) {
-
-    if ($statusHero == true) {
-      $this->status = "Die";
-
-    } if ($statusHero == false) {
-      $this->status = "";
-    }
-  }
-
-  public function heroDie() {
+  public function setStatus() {
 
     if ($this->health == 0) {
-      return true;
+      $statusHero = false;
 
     } else {
-      return false;
+      $statusHero = true;
     }
 
     if ($this->class == "Mage") {
 
       if ($this->mana == 0) {
-        return true;
+        $statusHero = false;
       }
+    }
+
+    if ($statusHero == false) {
+      $this->status = "Die";
+
+    } if ($statusHero == true) {
+      $this->status = "";
     }
   }
 
   public function itemsShop($selectItem) {
 
-    if ($this->gold >= $selectItem->getPriceItem()) {
-      $this->items[] = $selectItem->getNameItem();
-      $this->gold = $this->gold - $selectItem->getPriceItem();
+    if ($this->gold >= $selectItem->getPrice()) {
+      $this->items[] = [$selectItem->getName(), $selectItem->getPrice()];
+      $this->gold = $this->gold - $selectItem->getPrice();
     }
   }
 
+  public function backpackItems() {
+
+    foreach ($this->items as $i => $j) {
+      $backpackItems[$i] = $this->items[$i][0];
+    }
+
+    return $backpackItems;
+  }
+
   public function timerResurrection() {
+
     if ($this->status == "Die") {
       $this->health = $this->healthMax;
       $this->mana = $this->manaMax;

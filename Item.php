@@ -9,11 +9,11 @@ class Item {
   }
 
 
-  public function getNameItem() {
+  public function getName() {
     return $this->name;
   }
 
-  public function getPriceItem() {
+  public function getPrice() {
     return $this->price;
   }
 }
